@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excellence Academy - Redefining Education</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- RemixIcon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Color Palette: Monochrome + Royal Blue */
+            --color-deep-black: #0a0a0a;
+            --color-off-black: #1a1a1a;
+            --color-dark-grey: #2a2a2a;
+            --color-mid-grey: #808080;
+            --color-light-grey: #e0e0e0;
+            --color-off-white: #f5f5f5;
+            --color-pure-white: #ffffff;
+            --color-royal-blue: #4169E1;
+            --color-royal-blue-glow: rgba(65, 105, 225, 0.4);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg-hover: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: 20px;
+
+            /* Spacing */
+            --section-padding: 120px 40px;
+            --container-max-width: 1400px;
+
+            /* Transitions */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ==================== LIGHT MODE VARIABLES ==================== */
+        :root[data-theme="light"] {
+            --color-deep-black: #f5f5f5;
+            --color-off-black: #ffffff;
+            --color-dark-grey: #e0e0e0;
+            --color-mid-grey: #606060;
+            --color-light-grey: #2a2a2a;
+            --color-off-white: #1a1a1a;
+            --color-pure-white: #0a0a0a;
+            --glass-bg: rgba(0, 0, 0, 0.03);
+            --glass-bg-hover: rgba(0, 0, 0, 0.06);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-deep-black);
+            color: var(--color-off-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: var(--transition-smooth);
+            will-change: transform, background;
+        }
+
+        .glass-card:hover {
+            background: var(--glass-bg-hover);
+            box-shadow: 0 0 40px var(--color-royal-blue-glow);
+            transform: translateY(-4px);
+        }
+
+        /* Liquid Button Base Class */
+        .liquid-btn {
+            position: relative;
+            padding: 18px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-pure-white);
+            background: var(--color-royal-blue);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            will-change: filter;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .liquid-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--color-royal-blue), #5a7ef5);
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .liquid-btn:hover::before {
+            opacity: 0.8;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: var(--section-padding);
+        }
+
+        /* Abstract Gradient Mesh Background */
+        .gradient-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(65, 105, 225, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(65, 105, 225, 0.15) 0%, transparent 70%);
+            animation: meshMove 20s ease-in-out infinite;
+        }
+
+        @keyframes meshMove {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 10vw, 140px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--color-pure-white) 0%, var(--color-light-grey) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 300;
+            color: var(--color-light-grey);
+            margin-bottom: 48px;
+            letter-spacing: 0.02em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== WHY US SECTION (BENTO GRID) ==================== */
+        #why-us {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bento-card {
+            padding: 48px 40px;
+            text-align: center;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bento-card i {
+            font-size: 56px;
+            color: var(--color-royal-blue);
+            margin-bottom: 24px;
+            transition: var(--transition-spring);
+        }
+
+        .bento-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .bento-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--color-pure-white);
+        }
+
+        .bento-card p {
+            font-size: 16px;
+            color: var(--color-mid-grey);
+            line-height: 1.8;
+        }
+
+        /* ==================== FACULTY SECTION ==================== */
+        #faculty {
+            padding: var(--section-padding);
+            background: var(--color-off-black);
+        }
+
+        .faculty-scroll-container {
+            display: flex;
+            gap: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 40px 0;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
+            scroll-behavior: smooth;
+            cursor: grab;
+        }
+
+        .faculty-scroll-container:active {
+            cursor: grabbing;
+        }
+
+        .faculty-scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari */
+        }
+
+        .faculty-card {
+            flex: 0 0 280px;
+            text-align: center;
+            padding: 40px 32px;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .faculty-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            border: 3px solid var(--color-royal-blue);
+            overflow: hidden;
+            transition: var(--transition-spring);
+        }
+
+        .faculty-card:hover .faculty-avatar {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px var(--color-royal-blue-glow);
+        }
+
+        .faculty-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .faculty-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-pure-white);
+        }
+
+        .faculty-subject {
+            font-size: 16px;
+            color: var(--color-royal-blue);
+            font-weight: 500;
+        }
+
+        /* ==================== COURSES SECTION ==================== */
+        #courses {
+            padding: var(--section-padding);
+            background: var(--color-deep-black);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            padding: 32px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-royal-blue);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .course-icon {
+            font-size: 40px;
+            color: var(--color-royal-blue);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .course-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-pure-white);
+        }
+
+        .course-card p {
+            font-size: 15px;
+            color: var(--color-mid-grey);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .course-duration {
+            font-size: 13px;
+            color: var(--color-royal-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-cta {
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: var(--color-royal-blue);
+            color: var(--color-pure-white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            width: 100%;
+        }
+
+        .course-cta:hover {
+            background: linear-gradient(135deg, var(--color-royal-blue), #5a7ef5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--color-royal-blue-glow);
+        }
+
+        .course-card:hover .course-cta {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 var(--color-royal-blue-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(65, 105, 225, 0);
+            }
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        #contact {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 60px 0;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-btn i {
+            font-size: 20px;
+        }
+
+        .contact-info {
+            margin: 40px 0;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            font-size: 24px;
+            color: var(--color-royal-blue);
+            margin-top: 4px;
+        }
+
+        .info-item-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-pure-white);
+            margin-bottom: 4px;
+        }
+
+        .info-item-content p {
+            font-size: 15px;
+            color: var(--color-mid-grey);
+            line-height: 1.6;
+        }
+
+        /* Social Dock (MacOS Style) */
+        .social-dock {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 24px;
+            margin: 60px auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            width: fit-content;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--color-royal-blue);
+            color: var(--color-pure-white);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .social-icon:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-16px) scale(1.3) rotate(10deg);
+            box-shadow: 0 16px 40px var(--color-royal-blue-glow);
+            background: linear-gradient(135deg, var(--color-royal-blue), #5a7ef5);
+        }
+
+        .social-icon i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover i {
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        /* Google Maps */
+        .map-container {
+            margin-top: 60px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            filter: grayscale(100%) contrast(1.2) opacity(0.8);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: var(--color-off-black);
+            border-top: 1px solid var(--glass-border);
+            color: var(--color-mid-grey);
+            font-size: 14px;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px 24px;
+            }
+
+            .container {
+                padding: 0 24px;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-dock {
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .faculty-scroll-container {
+                padding-left: 24px;
+            }
+        }
+
+        /* ==================== PERFORMANCE OPTIMIZATIONS ==================== */
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .gpu-accelerate {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        /* ==================== THEME TOGGLE BUTTON ==================== */
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            background: var(--glass-bg-hover);
+            box-shadow: 0 0 30px var(--color-royal-blue-glow);
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .theme-toggle i {
+            font-size: 28px;
+            color: var(--color-royal-blue);
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle:hover i {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SVG Filter Container (Injected by JS) -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="liquidFilter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="2" result="turbulence"
+                    id="turbulenceElement">
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0" xChannelSelector="R"
+                    yChannelSelector="G" id="displacementElement">
+                </feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <!-- ==================== THEME TOGGLE BUTTON ==================== -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="ri-sun-line" id="themeIcon"></i>
+    </button>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero">
+        <div class="gradient-mesh"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Excellence Academy</h1>
+            <p class="hero-subtitle">Redefining Education</p>
+            <a href="#why-us" class="liquid-btn">Explore Our Vision</a>
+        </div>
+    </section>
+
+    <!-- ==================== WHY US SECTION ==================== -->
+    <section id="why-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="bento-grid">
+                <div class="bento-card glass-card">
+                    <i class="ri-graduation-cap-line"></i>
+                    <h3>Elite Faculty</h3>
+                    <p>Learn from industry experts and experienced educators who are passionate about your success.</p>
+                </div>
+                <div class="bento-card glass-card">
+                    <i class="ri-brain-line"></i>
+                    <h3>Personalized AI Learning</h3>
+                    <p>Adaptive learning paths powered by AI to match your unique pace and learning style.</p>
+                </div>
+                <div class="bento-card glass-card">
+                    <i class="ri-trophy-line"></i>
+                    <h3>Proven Results</h3>
+                    <p>98% success rate with students achieving their academic and career goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FACULTY SECTION ==================== -->
+    <section id="faculty">
+        <div class="container">
+            <h2 class="section-title">Meet Our Faculty</h2>
+            <div class="faculty-scroll-container">
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=DrSarahJohnson"
+                            alt="Dr. Sarah Johnson">
+                    </div>
+                    <h3 class="faculty-name">Dr. Sarah Johnson</h3>
+                    <p class="faculty-subject">Physics</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ProfMichaelChen"
+                            alt="Prof. Michael Chen">
+                    </div>
+                    <h3 class="faculty-name">Prof. Michael Chen</h3>
+                    <p class="faculty-subject">Mathematics</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=DrEmilyDavis" alt="Dr. Emily Davis">
+                    </div>
+                    <h3 class="faculty-name">Dr. Emily Davis</h3>
+                    <p class="faculty-subject">Chemistry</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ProfRajeshKumar"
+                            alt="Prof. Rajesh Kumar">
+                    </div>
+                    <h3 class="faculty-name">Prof. Rajesh Kumar</h3>
+                    <p class="faculty-subject">Biology</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=DrJessicaLee" alt="Dr. Jessica Lee">
+                    </div>
+                    <h3 class="faculty-name">Dr. Jessica Lee</h3>
+                    <p class="faculty-subject">English</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ProfDavidMiller"
+                            alt="Prof. David Miller">
+                    </div>
+                    <h3 class="faculty-name">Prof. David Miller</h3>
+                    <p class="faculty-subject">Computer Science</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COURSES SECTION ==================== -->
+    <section id="courses">
+        <div class="container">
+            <h2 class="section-title">Our Courses</h2>
+            <div class="courses-grid">
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-calculator-line course-icon"></i>
+                    <h3>JEE Preparation</h3>
+                    <p>Comprehensive coaching for JEE Main & Advanced with expert faculty and proven strategies.</p>
+                    <span class="course-duration">Duration: 2 Years</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-microscope-line course-icon"></i>
+                    <h3>NEET Coaching</h3>
+                    <p>Specialized medical entrance preparation with deep focus on Biology, Physics, and Chemistry.</p>
+                    <span class="course-duration">Duration: 2 Years</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-book-open-line course-icon"></i>
+                    <h3>Foundation Course</h3>
+                    <p>Building strong fundamentals for students in Classes 8-10 for future competitive exams.</p>
+                    <span class="course-duration">Duration: 1 Year</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-trophy-line course-icon"></i>
+                    <h3>Board Exam Mastery</h3>
+                    <p>Focused preparation for CBSE/State board exams with regular tests and doubt sessions.</p>
+                    <span class="course-duration">Duration: 6-12 Months</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-english-input course-icon"></i>
+                    <h3>English Proficiency</h3>
+                    <p>Advanced English language training for competitive exams and personality development.</p>
+                    <span class="course-duration">Duration: 6 Months</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+919876543211'"
+                    style="cursor: pointer;">
+                    <i class="ri-code-s-slash-line course-icon"></i>
+                    <h3>Coding & Tech</h3>
+                    <p>Programming fundamentals and computer science preparation for aspiring engineers.</p>
+                    <span class="course-duration">Duration: 1 Year</span>
+                    <button class="course-cta"
+                        style="margin-top: 16px; padding: 12px 24px; background: var(--color-royal-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Call
+                        for Admission</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title">Get In Touch</h2>
+                <p style="font-size: 18px; color: var(--color-mid-grey); margin-bottom: 20px;">
+                    Ready to start your journey to excellence? Reach out to us today.
+                </p>
+
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="ri-map-pin-line"></i>
+                        <div class="info-item-content">
+                            <h4>Our Address</h4>
+                            <p>Excellence Academy, 2nd Floor, Royal Plaza<br>
+                                MG Road, Bangalore, Karnataka 560001<br>
+                                India</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-phone-line"></i>
+                        <div class="info-item-content">
+                            <h4>Phone Numbers</h4>
+                            <p>Main Office: <a href="tel:+919876543210"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">+91 98765
+                                    43210</a><br>
+                                Admissions: <a href="tel:+919876543211"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">+91 98765
+                                    43211</a><br>
+                                Support: <a href="tel:+919876543212"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">+91 98765 43212</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-mail-line"></i>
+                        <div class="info-item-content">
+                            <h4>Email Addresses</h4>
+                            <p>General: <a href="mailto:info@excellenceacademy.com"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">info@excellenceacademy.com</a><br>
+                                Admissions: <a href="mailto:admissions@excellenceacademy.com"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">admissions@excellenceacademy.com</a><br>
+                                Support: <a href="mailto:support@excellenceacademy.com"
+                                    style="color: var(--color-royal-blue); text-decoration: none;">support@excellenceacademy.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-time-line"></i>
+                        <div class="info-item-content">
+                            <h4>Working Hours</h4>
+                            <p>Monday - Saturday: 8:00 AM - 8:00 PM<br>
+                                Sunday: 9:00 AM - 2:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-buttons">
+                    <a href="tel:+919876543210" class="liquid-btn contact-btn">
+                        <i class="ri-phone-line"></i>
+                        Call Now
+                    </a>
+                    <a href="mailto:info@excellenceacademy.com" class="liquid-btn contact-btn">
+                        <i class="ri-mail-line"></i>
+                        Email Us
+                    </a>
+                </div>
+
+                <!-- Social Dock -->
+                <div class="social-dock">
+                    <a href="https://instagram.com/excellenceacademy" target="_blank" class="social-icon"
+                        data-name="Instagram">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                    <a href="https://facebook.com/excellenceacademy" target="_blank" class="social-icon"
+                        data-name="Facebook">
+                        <i class="ri-facebook-line"></i>
+                    </a>
+                    <a href="https://linkedin.com/company/excellenceacademy" target="_blank" class="social-icon"
+                        data-name="LinkedIn">
+                        <i class="ri-linkedin-line"></i>
+                    </a>
+                    <a href="https://youtube.com/@excellenceacademy" target="_blank" class="social-icon"
+                        data-name="YouTube">
+                        <i class="ri-youtube-line"></i>
+                    </a>
+                    <a href="https://wa.me/919876543210" target="_blank" class="social-icon" data-name="WhatsApp">
+                        <i class="ri-whatsapp-line"></i>
+                    </a>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8580123456789!2d77.59456!3d12.97194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE5LjAiTiA3N8KwMzUnNDAuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>&copy; 2026 Excellence Academy. All Rights Reserved. | Designed with passion for education.</p>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== LIQUID GLASS BUTTON EFFECT ====================
+        class LiquidButtonEffect {
+            constructor() {
+                this.buttons = document.querySelectorAll('.liquid-btn');
+                this.turbulenceElement = document.getElementById('turbulenceElement');
+                this.displacementElement = document.getElementById('displacementElement');
+                this.init();
+            }
+
+            init() {
+                this.buttons.forEach(button => {
+                    // Hover animation using GSAP
+                    button.addEventListener('mouseenter', () => {
+                        // Apply filter to button
+                        button.style.filter = 'url(#liquidFilter)';
+
+                        // Animate the liquid distortion effect
+                        gsap.to(this.displacementElement, {
+                            attr: { scale: 15 },
+                            duration: 0.6,
+                            ease: 'power2.out'
+                        });
+
+                        gsap.to(this.turbulenceElement, {
+                            attr: { baseFrequency: '0.03 0.03' },
+                            duration: 0.6,
+                            ease: 'power2.out'
+                        });
+                    });
+
+                    button.addEventListener('mouseleave', () => {
+                        // Reset the effect
+                        gsap.to(this.displacementElement, {
+                            attr: { scale: 0 },
+                            duration: 0.4,
+                            ease: 'power2.in',
+                            onComplete: () => {
+                                button.style.filter = 'none';
+                            }
+                        });
+
+                        gsap.to(this.turbulenceElement, {
+                            attr: { baseFrequency: '0.01 0.01' },
+                            duration: 0.4,
+                            ease: 'power2.in'
+                        });
+                    });
+                });
+            }
+        }
+
+        // ==================== SMOOTH SCROLL ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for fade-in animations
+        document.querySelectorAll('.bento-card, .faculty-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // ==================== HORIZONTAL SCROLL ANIMATION ====================
+        const facultyContainer = document.querySelector('.faculty-scroll-container');
+
+        // Enhanced horizontal scroll with trackpad support
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // Mouse drag scroll
+        facultyContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - facultyContainer.offsetLeft;
+            scrollLeft = facultyContainer.scrollLeft;
+        });
+
+        facultyContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        facultyContainer.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        facultyContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - facultyContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            facultyContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Trackpad/mousewheel horizontal scroll
+        facultyContainer.addEventListener('wheel', (e) => {
+            // Check if it's a horizontal scroll gesture
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // Natural horizontal scroll - don't prevent default
+                return;
+            }
+
+            // Convert vertical scroll to horizontal
+            e.preventDefault();
+            facultyContainer.scrollLeft += e.deltaY;
+        }, { passive: false });
+
+        // ==================== SOCIAL DOCK ENHANCED ANIMATIONS ====================
+        const socialIcons = document.querySelectorAll('.social-icon');
+
+        socialIcons.forEach((icon, index) => {
+            icon.addEventListener('mouseenter', function () {
+                // Animate the icon with GSAP for smoother effect
+                gsap.to(this, {
+                    y: -16,
+                    scale: 1.3,
+                    rotation: 10,
+                    duration: 0.4,
+                    ease: 'back.out(1.7)'
+                });
+
+                // Add ripple effect to pseudo-element
+                gsap.to(this.querySelector('i'), {
+                    scale: 1.1,
+                    rotation: -10,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            icon.addEventListener('mouseleave', function () {
+                gsap.to(this, {
+                    y: 0,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+
+                gsap.to(this.querySelector('i'), {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+            });
+        });
+
+        // ==================== INITIALIZE ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Register GSAP ScrollTrigger
+            if (typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+            }
+
+            // Initialize Liquid Button Effect (exclude social icons from liquid effect)
+            new LiquidButtonEffect();
+
+            // Add entrance animation to hero
+            gsap.from('.hero-content', {
+                opacity: 0,
+                y: 60,
+                duration: 1.2,
+                ease: 'power3.out',
+                delay: 0.3
+            });
+
+            // Animate gradient mesh
+            gsap.to('.gradient-mesh', {
+                scale: 1.05,
+                rotation: 5,
+                duration: 20,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true
+            });
+
+            // Stagger animation for course cards - set initial state
+            gsap.set('.course-card', { opacity: 1, y: 0 }); // Ensure cards are visible
+
+            gsap.from('.course-card', {
+                opacity: 0,
+                y: 40,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#courses',
+                    start: 'top 80%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to('.course-card', {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: 'power2.out'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ==================== THEME TOGGLE ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const root = document.documentElement;
+
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+
+            // Add rotation animation
+            gsap.to(themeToggle, {
+                rotation: '+=360',
+                duration: 0.6,
+                ease: 'back.out(1.7)'
+            });
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'ri-sun-line'; // Show sun in dark mode
+            } else {
+                themeIcon.className = 'ri-moon-line'; // Show moon in light mode
+            }
+        }
+
+        // ==================== PERFORMANCE MONITORING ====================
+        // Log FPS in development (remove in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            let lastTime = performance.now();
+            let frames = 0;
+
+            function measureFPS() {
+                frames++;
+                const currentTime = performance.now();
+                if (currentTime >= lastTime + 1000) {
+                    const fps = Math.round((frames * 1000) / (currentTime - lastTime));
+                    console.log(`FPS: ${fps}`);
+                    frames = 0;
+                    lastTime = currentTime;
+                }
+                requestAnimationFrame(measureFPS);
+            }
+
+            requestAnimationFrame(measureFPS);
+        }
+    </script>
+</body>
+
+</html>
