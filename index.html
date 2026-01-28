@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudBite Kitchen - Gourmet Meals Delivered Fresh</title>
 
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts: Poppins ---->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
+    <!-- Google Fonts: Bebas Neue for Netflix Intro -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <!-- RemixIcon CDN -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -108,6 +111,117 @@
             -webkit-backdrop-filter: blur(var(--glass-blur));
             border: 1px solid var(--glass-border);
             border-radius: 24px;
+        }
+
+        /* ==================== NETFLIX-STYLE STREAMING INTRO ==================== */
+        .netflix-intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .netflix-zoom-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Vertical Streaming Strips */
+        .netflix-strip {
+            position: absolute;
+            bottom: 0;
+            width: 12%;
+            height: 0;
+            transform-origin: bottom center;
+        }
+
+        /* Different colors for each strip */
+        .netflix-strip:nth-child(1) {
+            background: linear-gradient(to top, #E50914 0%, #FF6347 100%);
+        }
+
+        .netflix-strip:nth-child(2) {
+            background: linear-gradient(to top, #FF4500 0%, #FF7F50 100%);
+        }
+
+        .netflix-strip:nth-child(3) {
+            background: linear-gradient(to top, #E50914 0%, #FF6B6B 100%);
+        }
+
+        .netflix-strip:nth-child(4) {
+            background: linear-gradient(to top, #FF8C00 0%, #FFA500 100%);
+        }
+
+        .netflix-strip:nth-child(5) {
+            background: linear-gradient(to top, #E50914 0%, #FF4757 100%);
+        }
+
+        .netflix-strip:nth-child(6) {
+            background: linear-gradient(to top, #FF6347 0%, #FF8566 100%);
+        }
+
+        .netflix-strip:nth-child(7) {
+            background: linear-gradient(to top, #FF4500 0%, #FF6B35 100%);
+        }
+
+        /* Text Container */
+        .netflix-text-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .netflix-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(100px, 20vw, 240px);
+            color: #E50914;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* Hide main content during intro */
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        body.intro-active .nav-bar,
+        body.intro-active #hero,
+        body.intro-active #why-us,
+        body.intro-active #faculty,
+        body.intro-active #courses,
+        body.intro-active #contact {
+            opacity: 0;
+        }
+
+        /* Content reveal animation */
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ==================== STICKY GLASS NAVIGATION ==================== */
@@ -1229,7 +1343,27 @@
     </style>
 </head>
 
-<body>
+
+<body class="intro-active">
+    <!-- ==================== NETFLIX-STYLE STREAMING INTRO ==================== -->
+    <div class="netflix-intro-overlay" id="netflixIntro">
+        <div class="netflix-zoom-container">
+            <!-- Vertical Streaming Strips -->
+            <div class="netflix-strip" style="left: 5%;"></div>
+            <div class="netflix-strip" style="left: 20%;"></div>
+            <div class="netflix-strip" style="left: 35%;"></div>
+            <div class="netflix-strip" style="left: 50%;"></div>
+            <div class="netflix-strip" style="left: 65%;"></div>
+            <div class="netflix-strip" style="left: 80%;"></div>
+            <div class="netflix-strip" style="left: 92%;"></div>
+
+            <!-- Text Container -->
+            <div class="netflix-text-container">
+                <div class="netflix-text">SNACK 69</div>
+            </div>
+        </div>
+    </div>
+
     <!-- SVG Filter Container (Injected by JS) -->
     <svg style="position: absolute; width: 0; height: 0;">
         <defs>
@@ -1656,6 +1790,84 @@
                     navLinks.classList.remove('active'); // Close mobile menu
                 }
             });
+        });
+
+        // ==================== NETFLIX-STYLE STREAMING INTRO ====================
+        window.addEventListener('load', () => {
+            const netflixIntro = document.getElementById('netflixIntro');
+            const strips = document.querySelectorAll('.netflix-strip');
+            const netflixText = document.querySelector('.netflix-text');
+            const zoomContainer = document.querySelector('.netflix-zoom-container');
+
+            // Animation will play on every page load
+
+            // Ensure intro is visible before starting animation
+            netflixIntro.style.display = 'flex';
+            netflixIntro.style.opacity = '1';
+            document.body.classList.add('intro-active');
+
+            // Create GSAP timeline for Netflix intro
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    // Remove intro overlay
+                    netflixIntro.style.display = 'none';
+                    document.body.classList.remove('intro-active');
+
+                    // Reveal main content
+                    const sections = document.querySelectorAll('.nav-bar, #hero, #why-us, #faculty, #courses, #contact');
+                    sections.forEach((section, index) => {
+                        gsap.to(section, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            delay: index * 0.06,
+                            ease: 'power2.out'
+                        });
+                    });
+                }
+            });
+
+            // PHASE 1: Strips shoot up from bottom (0.6s)
+            tl.to(strips, {
+                height: '100vh',
+                duration: 0.6,
+                ease: 'power2.out',
+                stagger: {
+                    each: 0.08,
+                    from: 'random'
+                }
+            });
+
+            // PHASE 2: Text formation - strips collapse and text appears (0.8s)
+            tl.to(strips, {
+                scaleY: 0,
+                duration: 0.5,
+                ease: 'power3.inOut'
+            }, '+=0.1')
+                .to(netflixText, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: 'back.out(1.7)'
+                }, '-=0.4');
+
+            // PHASE 3: Zoom through text center (0.9s)
+            tl.to(zoomContainer, {
+                scale: 15,
+                duration: 0.9,
+                ease: 'power4.in'
+            }, '+=0.2')
+                .to(netflixText, {
+                    color: '#E50914',
+                    duration: 0.3
+                }, '-=0.9');
+
+            // PHASE 4: Fade to reveal (0.6s)
+            tl.to(netflixIntro, {
+                opacity: 0,
+                duration: 0.6,
+                ease: 'power2.out'
+            }, '-=0.2');
         });
 
         // ==================== STATS COUNTER ANIMATION ====================
