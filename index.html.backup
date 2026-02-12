@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudBite Kitchen - Gourmet Meals Delivered Fresh</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- RemixIcon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Premium Cloud Kitchen Color Palette */
+            --color-deep-black: #0f0f0f;
+            --color-off-black: #1a1a1a;
+            --color-dark-grey: #2a2a2a;
+            --color-mid-grey: #808080;
+            --color-light-grey: #e5e5e5;
+            --color-off-white: #e5e5e5;
+            --color-pure-white: #ffffff;
+
+            /* Accent Colors - Food Theme */
+            --color-accent-orange: #FF6B35;
+            --color-accent-red: #C1403D;
+            --color-accent-green: #5FA56F;
+            --color-accent-yellow: #FFD23F;
+            --color-orange-glow: rgba(255, 107, 53, 0.4);
+            --color-red-glow: rgba(193, 64, 61, 0.4);
+            --color-green-glow: rgba(95, 165, 111, 0.4);
+            --color-yellow-glow: rgba(255, 210, 63, 0.4);
+
+            /* Typography */
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg-hover: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: 20px;
+
+            /* Spacing */
+            --section-padding: 100px 40px;
+            --container-max-width: 1400px;
+
+            /* Transitions */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ==================== LIGHT MODE VARIABLES ==================== */
+        :root[data-theme="light"] {
+            --color-deep-black: #f5f5f5;
+            --color-off-black: #ffffff;
+            --color-dark-grey: #e0e0e0;
+            --color-mid-grey: #606060;
+            --color-light-grey: #2a2a2a;
+            --color-off-white: #1a1a1a;
+            --color-pure-white: #0a0a0a;
+            --glass-bg: rgba(0, 0, 0, 0.03);
+            --glass-bg-hover: rgba(0, 0, 0, 0.06);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-deep-black);
+            color: var(--color-off-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+        }
+
+        /* ==================== PREMIUM NETFLIX-STYLE INTRO ==================== */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: fadeOutIntro 1s ease-out 4.5s forwards;
+        }
+
+        /* Animated background particles */
+        .intro-overlay::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: particleFloat 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-50px, -50px);
+            }
+        }
+
+        /* Sound wave effect */
+        .intro-overlay::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(255, 107, 53, 0.05) 31%, transparent 32%);
+            animation: soundWave 2s ease-out 1.5s;
+            opacity: 0;
+        }
+
+        @keyframes soundWave {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(2.5);
+            }
+        }
+
+        .intro-logo-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .intro-logo {
+            font-size: clamp(70px, 18vw, 220px);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            text-transform: uppercase;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.5) rotateX(90deg);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation:
+                dramaticEntrance 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards,
+                pulseGlow 2s ease-in-out 2s infinite alternate;
+        }
+
+        /* Gradient text effect */
+        .intro-logo span {
+            background: linear-gradient(135deg,
+                    #FF6B35 0%,
+                    #FF8C42 25%,
+                    #C1403D 50%,
+                    #FF6B35 75%,
+                    #FFD23F 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* 3D dramatic entrance */
+        @keyframes dramaticEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateX(90deg) translateZ(-200px);
+                filter: blur(20px) brightness(0.3);
+            }
+
+            40% {
+                opacity: 1;
+                filter: blur(5px) brightness(1.2);
+            }
+
+            60% {
+                transform: scale(1.15) rotateX(-5deg) translateZ(50px);
+            }
+
+            80% {
+                transform: scale(0.95) rotateX(2deg) translateZ(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg) translateZ(0);
+                filter: blur(0px) brightness(1);
+            }
+        }
+
+        /* Intense glow pulse */
+        @keyframes pulseGlow {
+            0% {
+                filter:
+                    drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 40px rgba(255, 107, 53, 0.6)) drop-shadow(0 0 60px rgba(193, 64, 61, 0.4));
+            }
+
+            100% {
+                filter:
+                    drop-shadow(0 0 40px rgba(255, 107, 53, 1)) drop-shadow(0 0 80px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 120px rgba(193, 64, 61, 0.6)) drop-shadow(0 0 160px rgba(255, 210, 63, 0.4));
+            }
+        }
+
+        /* Flash effect */
+        .intro-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, transparent 70%);
+            opacity: 0;
+            animation: flashEffect 0.3s ease-out 2s;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @keyframes flashEffect {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Smooth fade out */
+        @keyframes fadeOutIntro {
+            0% {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Hide main content during intro */
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        body.intro-active .nav-bar,
+        body.intro-active #hero,
+        body.intro-active #why-us,
+        body.intro-active #faculty,
+        body.intro-active #courses,
+        body.intro-active #contact {
+            opacity: 0;
+        }
+
+        /* Smooth content reveal */
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* ==================== STICKY GLASS NAVIGATION ==================== */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar.scrolled {
+            background: rgba(15, 15, 15, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-light-grey);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-pure-white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--color-pure-white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(15, 15, 15, 0.95);
+                backdrop-filter: blur(12px);
+                padding: 20px;
+                gap: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+        }
+
+
+        .glass-card:hover {
+            background: var(--glass-bg-hover);
+            box-shadow: 0 0 30px var(--color-orange-glow), 0 0 60px var(--color-red-glow);
+            transform: translateY(-10px);
+            border: 1px solid rgba(255, 107, 53, 0.5);
+        }
+
+        /* Liquid Button Base Class */
+        .liquid-btn {
+            position: relative;
+            padding: 18px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-pure-white);
+            background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            will-change: filter;
+            text-decoration: none;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.4s forwards;
+        }
+
+        .liquid-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .liquid-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    transparent 100%);
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
+        }
+
+        .liquid-btn:hover::before {
+            opacity: 1;
+        }
+
+        .liquid-btn:hover::after {
+            left: 130%;
+        }
+
+        .liquid-btn:hover {
+            box-shadow: 0 8px 30px var(--color-orange-glow);
+            transform: translateY(-2px);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: var(--section-padding);
+        }
+
+        /* Geometric Pattern Background */
+        .gradient-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+            background-image:
+                linear-gradient(30deg, rgba(168, 85, 247, 0.15) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.15) 87.5%, rgba(168, 85, 247, 0.15)),
+                linear-gradient(150deg, rgba(168, 85, 247, 0.15) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.15) 87.5%, rgba(168, 85, 247, 0.15)),
+                linear-gradient(30deg, rgba(168, 85, 247, 0.15) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.15) 87.5%, rgba(168, 85, 247, 0.15)),
+                linear-gradient(150deg, rgba(168, 85, 247, 0.15) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.15) 87.5%, rgba(168, 85, 247, 0.15)),
+                radial-gradient(ellipse at 20% 30%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(95, 165, 111, 0.2) 0%, transparent 50%);
+            background-size: 80px 140px, 80px 140px, 80px 140px, 80px 140px, 100% 100%, 100% 100%;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 0 0;
+            animation: meshMove 20s ease-in-out infinite;
+        }
+
+        @keyframes meshMove {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 10vw, 140px);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, var(--color-accent-orange) 0%, var(--color-accent-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            position: relative;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            filter: drop-shadow(0 0 40px var(--color-cyan-glow)) drop-shadow(0 0 60px var(--color-purple-glow));
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.1s forwards, titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% {
+                filter: drop-shadow(0 0 40px var(--color-orange-glow)) drop-shadow(0 0 60px var(--color-red-glow));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 60px var(--color-orange-glow)) drop-shadow(0 0 80px var(--color-red-glow));
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 300;
+            color: var(--color-light-grey);
+            margin-bottom: 48px;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.25s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== WHY US SECTION (BENTO GRID) ==================== */
+        #why-us {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+            color: var(--color-pure-white);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bento-card {
+            padding: 48px 40px;
+            text-align: center;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .bento-card i {
+            font-size: 56px;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            transition: var(--transition-spring);
+        }
+
+        .bento-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 20px var(--color-purple-glow));
+        }
+
+        .bento-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--color-pure-white);
+        }
+
+        .bento-card p {
+            font-size: 16px;
+            color: var(--color-light-grey);
+            line-height: 1.8;
+        }
+
+        /* ==================== FACULTY SECTION ==================== */
+        #faculty {
+            padding: var(--section-padding);
+            background: var(--color-off-black);
+        }
+
+        .faculty-scroll-container {
+            display: flex;
+            gap: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 40px 0;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
+            scroll-behavior: smooth;
+            cursor: grab;
+        }
+
+        .faculty-scroll-container:active {
+            cursor: grabbing;
+        }
+
+        .faculty-scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari */
+        }
+
+        .faculty-card {
+            flex: 0 0 280px;
+            text-align: center;
+            padding: 40px 32px;
+            transition: all 0.4s ease;
+            user-select: none;
+        }
+
+        .faculty-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            border: 3px solid transparent;
+            background: linear-gradient(var(--color-off-black), var(--color-off-black)) padding-box,
+                linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan)) border-box;
+            overflow: hidden;
+            transition: var(--transition-spring);
+            position: relative;
+        }
+
+        .faculty-card:hover .faculty-avatar {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px var(--color-purple-glow), 0 0 40px var(--color-cyan-glow);
+        }
+
+        .faculty-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .faculty-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-pure-white);
+        }
+
+        .faculty-subject {
+            font-size: 16px;
+            color: var(--color-accent-cyan);
+            font-weight: 500;
+        }
+
+        /* ==================== COURSES SECTION ==================== */
+        #courses {
+            padding: var(--section-padding);
+            background: var(--color-deep-black);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            padding: 32px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--color-accent-purple), var(--color-accent-cyan));
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .course-icon {
+            font-size: 40px;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .course-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-pure-white);
+        }
+
+        .course-card p {
+            font-size: 15px;
+            color: var(--color-light-grey);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .course-duration {
+            font-size: 13px;
+            color: var(--color-accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-cta {
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
+            color: var(--color-pure-white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-cta::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    transparent 100%);
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
+        }
+
+        .course-cta:hover {
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--color-purple-glow);
+        }
+
+        .course-cta:hover::after {
+            left: 130%;
+        }
+
+        .course-card:hover .course-cta {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 var(--color-purple-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(168, 85, 247, 0);
+            }
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        #contact {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .info-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            gap: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .info-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .info-item:hover {
+            transform: translateY(-8px);
+            background: var(--glass-bg-hover);
+            border-color: var(--color-accent-cyan);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .info-item i {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .info-item-content {
+            flex: 1;
+        }
+
+        .info-item-content h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-pure-white);
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .info-item-content p {
+            font-size: 15px;
+            color: var(--color-light-grey);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .info-item-content a {
+            color: var(--color-accent-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .info-item-content a:hover {
+            color: var(--color-accent-purple);
+            transform: translateX(2px);
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .contact-btn i {
+            font-size: 20px;
+        }
+
+        /* WhatsApp specific button */
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border: none;
+        }
+
+        .whatsapp-btn:hover {
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Social Dock (MacOS Style) */
+        .social-dock {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 24px;
+            margin: 60px auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            width: fit-content;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
+            color: var(--color-pure-white);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .social-icon:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-20px) scale(1.4);
+            animation: socialBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Individual social icon colors */
+        .social-icon:nth-child(1):hover {
+            background: linear-gradient(135deg, #E4405F, #C13584);
+            box-shadow: 0 20px 50px rgba(228, 64, 95, 0.6);
+        }
+
+        .social-icon:nth-child(2):hover {
+            background: linear-gradient(135deg, #1877F2, #0866FF);
+            box-shadow: 0 20px 50px rgba(24, 119, 242, 0.6);
+        }
+
+        .social-icon:nth-child(3):hover {
+            background: linear-gradient(135deg, #0077B5, #00A0DC);
+            box-shadow: 0 20px 50px rgba(0, 119, 181, 0.6);
+        }
+
+        .social-icon:nth-child(4):hover {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            box-shadow: 0 20px 50px rgba(255, 0, 0, 0.6);
+        }
+
+        .social-icon:nth-child(5):hover {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            box-shadow: 0 20px 50px rgba(37, 211, 102, 0.6);
+        }
+
+        .social-icon i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .social-icon:hover i {
+            transform: scale(1.3) rotate(360deg);
+        }
+
+        @keyframes socialBounce {
+
+            0%,
+            100% {
+                transform: translateY(-20px) scale(1.4);
+            }
+
+            50% {
+                transform: translateY(-28px) scale(1.5);
+            }
+        }
+
+        /* Google Maps */
+        .map-container {
+            margin-top: 60px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            /* Colorful map - no filter applied */
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--color-off-black);
+            border-top: 1px solid var(--glass-border);
+            color: var(--color-light-grey);
+            font-size: 14px;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px 24px;
+            }
+
+            .container {
+                padding: 0 24px;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-dock {
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .faculty-scroll-container {
+                padding-left: 24px;
+            }
+        }
+
+        /* ==================== PERFORMANCE OPTIMIZATIONS ==================== */
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .gpu-accelerate {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        /* ==================== THEME TOGGLE BUTTON ==================== */
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            background: var(--glass-bg-hover);
+            box-shadow: 0 0 30px var(--color-purple-glow), 0 0 40px var(--color-cyan-glow);
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .theme-toggle i {
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle:hover i {
+            transform: scale(1.2);
+        }
+
+        /* ==================== STATS COUNTER SECTION ==================== */
+        .stats-section {
+            padding: 80px 40px;
+            background: var(--color-off-black);
+            border-bottom: 1px solid var(--glass-border);
+            margin-top: 70px;
+        }
+
+        .stats-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .stat-item:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px var(--color-purple-glow);
+        }
+
+        .stat-number {
+            font-size: 60px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--color-light-grey);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* ==================== ALUMNI TRUST SECTION ==================== */
+        .alumni-section {
+            padding: 80px 40px;
+            background: var(--color-deep-black);
+            overflow: hidden;
+        }
+
+        .alumni-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--color-pure-white);
+            margin-bottom: 60px;
+        }
+
+        .alumni-marquee {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .alumni-track {
+            display: flex;
+            gap: 80px;
+            animation: marqueeScroll 30s linear infinite;
+        }
+
+        .alumni-item {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-mid-grey);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .alumni-item:hover {
+            color: var(--color-pure-white);
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        @keyframes marqueeScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ==================== FAQ ACCORDION ==================== */
+        .faq-section {
+            padding: var(--section-padding);
+            background: var(--color-off-black);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-item:hover {
+            border-color: var(--color-accent-cyan);
+        }
+
+        .faq-question {
+            padding: 24px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .faq-question h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-pure-white);
+            margin: 0;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            color: var(--color-accent-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-answer p {
+            padding: 0 30px 24px 30px;
+            color: var(--color-light-grey);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        /* ==================== PARALLAX BACKGROUND ==================== */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--color-deep-black);
+            will-change: transform;
+        }
+
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, var(--color-purple-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--color-cyan-glow) 0%, transparent 50%);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+
+<body class="intro-active">
+    <!-- ==================== PREMIUM NETFLIX-STYLE INTRO ==================== -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-loading"></div>
+        <div class="intro-logo-container">
+            <div class="intro-logo" data-text="SNACK 69"><span>Snack 69</span></div>
+        </div>
+        <div class="intro-wave"></div>
+        <div class="intro-flash"></div>
+    </div>
+
+    <!-- SVG Filter Container (Injected by JS) -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="liquidFilter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="2" result="turbulence"
+                    id="turbulenceElement">
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0" xChannelSelector="R"
+                    yChannelSelector="G" id="displacementElement">
+                </feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- ==================== PARALLAX BACKGROUND ==================== -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+
+    <!-- ==================== STICKY NAVIGATION ==================== -->
+    <nav class="nav-bar" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">Snack 69</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#chefs">Our Chefs</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Order Now</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <!-- ==================== THEME TOGGLE BUTTON ==================== -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="ri-sun-line" id="themeIcon"></i>
+    </button>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero">
+        <div class="gradient-mesh"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Snack 69</h1>
+            <p class="hero-subtitle">Delivery in 300 Seconds</p>
+            <a href="#menu" class="liquid-btn">Order Now</a>
+        </div>
+    </section>
+
+    <!-- ==================== STATS COUNTER SECTION ==================== -->
+    <section class="stats-section" id="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number" data-target="10000">0</span>
+                <div class="stat-label">Orders</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="4.9">0</span>
+                <div class="stat-label">Average Rating ★</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="300">0</span>
+                <div class="stat-label">Sec Delivery</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== WHY US SECTION ==================== -->
+    <section id="why-us">
+        <div class="container">
+            <h2 class="section-title">Why Snack 69?</h2>
+            <div class="bento-grid">
+                <div class="bento-card glass-card">
+                    <i class="ri-seedling-line"></i>
+                    <h3>Lightning Speed</h3>
+                    <p>Guaranteed delivery in 300 seconds.</p>
+                </div>
+                <div class="bento-card glass-card">
+                    <i class="ri-restaurant-2-line"></i>
+                    <h3>Hot & Fresh</h3>
+                    <p>Served piping hot straight from the pan.</p>
+                </div>
+                <div class="bento-card glass-card">
+                    <i class="ri-rocket-line"></i>
+                    <h3>Night Cravings</h3>
+                    <p>Open late for your midnight hunger.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== OUR CHEFS SECTION ==================== -->
+    <section id="chefs">
+        <div class="container">
+            <h2 class="section-title">Chefs & Founders</h2>
+            <div class="faculty-scroll-container">
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ChefOmm69" alt="Chef Omm 69">
+                    </div>
+                    <h3 class="faculty-name">Chef Omm 69</h3>
+                    <p class="faculty-subject">Head Chef</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ChefSourav69" alt="Chef Sourav 69">
+                    </div>
+                    <h3 class="faculty-name">Chef Sourav 69</h3>
+                    <p class="faculty-subject">2nd Chef</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kunal" alt="Kunal">
+                    </div>
+                    <h3 class="faculty-name">Kunal</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Subham" alt="Subham">
+                    </div>
+                    <h3 class="faculty-name">Subham</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Amit" alt="Amit">
+                    </div>
+                    <h3 class="faculty-name">Amit</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Subha" alt="Subha">
+                    </div>
+                    <h3 class="faculty-name">Subha</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Siva" alt="Siva">
+                    </div>
+                    <h3 class="faculty-name">Siva</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+                <div class="faculty-card glass-card">
+                    <div class="faculty-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Akash" alt="Akash">
+                    </div>
+                    <h3 class="faculty-name">Akash</h3>
+                    <p class="faculty-subject">Founder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MENU SECTION ==================== -->
+    <section id="menu">
+        <div class="container">
+            <h2 class="section-title">Our Menu</h2>
+            <div class="courses-grid">
+                <div class="course-card glass-card" onclick="window.location.href='tel:+917978973419'"
+                    style="cursor: pointer;">
+                    <i class="ri-fire-line course-icon"></i>
+                    <h3>Spicy Maggi</h3>
+                    <p>The classic comfort food, cooked to perfection.</p>
+                    <span class="course-duration">₹49</span>
+                    <button class="course-cta">Order Now</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+917978973419'"
+                    style="cursor: pointer;">
+                    <i class="ri-bowl-line course-icon"></i>
+                    <h3>Sweet Corn</h3>
+                    <p>Buttered, seasoned, and steamed fresh corn.</p>
+                    <span class="course-duration">₹40</span>
+                    <button class="course-cta">Order Now</button>
+                </div>
+                <div class="course-card glass-card" onclick="window.location.href='tel:+917978973419'"
+                    style="cursor: pointer;">
+                    <i class="ri-restaurant-line course-icon"></i>
+                    <h3>Hot Soup</h3>
+                    <p>Thick, creamy, and soul-warming.</p>
+                    <span class="course-duration">₹40</span>
+                    <button class="course-cta">Order Now</button>
+                </div>
+                <div class="course-card glass-card" style="cursor: default;">
+                    <i class="ri-goblet-line course-icon"></i>
+                    <h3>Upcoming Items</h3>
+                    <p>Many new dishes coming soon!</p>
+                    <span class="course-duration">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CUSTOMER TESTIMONIALS SECTION ==================== -->
+    <section class="alumni-section" id="testimonials">
+        <h2 class="alumni-title">What Our Customers Say</h2>
+        <div class="alumni-marquee">
+            <div class="alumni-track">
+                <span class="alumni-item">"Super fast delivery!" - Rajesh K.</span>
+                <span class="alumni-item">"Always fresh & on time" - Priya M.</span>
+                <span class="alumni-item">"Love the late night service" - Amit S.</span>
+                <span class="alumni-item">"Best Maggi ever!" - Sneha R.</span>
+                <span class="alumni-item">"My midnight go-to" - Karthik V.</span>
+                <span class="alumni-item">"5-star quality food" - Divya N.</span>
+                <span class="alumni-item">"Fast delivery, hot food" - Arjun T.</span>
+                <span class="alumni-item">"Always hot & fresh!" - Meera J.</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="alumni-item">"Super fast delivery!" - Rajesh K.</span>
+                <span class="alumni-item">"Always fresh & on time" - Priya M.</span>
+                <span class="alumni-item">"Love the late night service" - Amit S.</span>
+                <span class="alumni-item">"Best Maggi ever!" - Sneha R.</span>
+                <span class="alumni-item">"My midnight go-to" - Karthik V.</span>
+                <span class="alumni-item">"5-star quality food" - Divya N.</span>
+                <span class="alumni-item">"Fast delivery, hot food" - Arjun T.</span>
+                <span class="alumni-item">"Always hot & fresh!" - Meera J.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FAQ ACCORDION SECTION ==================== -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What are your delivery areas?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We currently deliver across major areas in Bangalore including Koramangala, Indiranagar, HSR
+                        Layout, Whitefield, and Electronic City. Delivery within a 10km radius from our kitchen is
+                        available with minimum order value.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I place an order?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>You can place orders by calling us directly at +91 98765 43210, via WhatsApp, or through our
+                        website. Simply select your dishes, provide delivery address, and our team will confirm your
+                        order immediately.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do you offer customization?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We accommodate dietary preferences including vegan, gluten-free, and spice level
+                        adjustments. Just let us know your requirements when ordering, and our chefs will customize your
+                        meal accordingly.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What are your operating hours?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Snack 69 is open late! We serve you from 11:00 PM to 3:00 AM for those midnight cravings. Perfect
+                        for late-night study sessions or work.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What is your minimum order value?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our minimum order is just ₹75 with free delivery within 3km. For orders below ₹75, a small
+                        delivery fee of ₹20 applies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title">Get In Touch</h2>
+                <p style="font-size: 18px; color: var(--color-mid-grey); margin-bottom: 20px;">
+                    Craving snacks? Order now for 300-second delivery!
+                </p>
+
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="ri-map-pin-line"></i>
+                        <div class="info-item-content">
+                            <h4>Our Kitchen</h4>
+                            <p>Snack 69, 420 Food Street<br>
+                                Koramangala, Bangalore<br>
+                                Karnataka 560034, India</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-phone-line"></i>
+                        <div class="info-item-content">
+                            <h4>Phone Numbers</h4>
+                            <p>Boys: <a href="tel:+917978973419">+91 7978973419</a><br>
+                                Boys: <a href="tel:+917873012439">+91 7873012439</a><br>
+                                Girls: <a href="tel:+919078983658">+91 9078983658</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-mail-line"></i>
+                        <div class="info-item-content">
+                            <h4>Email Addresses</h4>
+                            <p>Orders: <a href="mailto:orders@cloudbitekitchen.com">orders@cloudbitekitchen.com</a><br>
+                                Catering: <a
+                                    href="mailto:catering@cloudbitekitchen.com">catering@cloudbitekitchen.com</a><br>
+                                Support: <a href="mailto:support@cloudbitekitchen.com">support@cloudbitekitchen.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="ri-time-line"></i>
+                        <div class="info-item-content">
+                            <h4>Operating Hours</h4>
+                            <p>Late Night: 11:00 PM - 3:00 AM<br>
+                                Open 7 days a week</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-buttons">
+                    <a href="tel:+919876543210" class="liquid-btn contact-btn">
+                        <i class="ri-phone-line"></i>
+                        Call Now
+                    </a>
+                    <a href="mailto:info@excellenceacademy.com" class="liquid-btn contact-btn">
+                        <i class="ri-mail-line"></i>
+                        Email Us
+                    </a>
+                    <a href="https://wa.me/919876543210" target="_blank" class="liquid-btn contact-btn whatsapp-btn">
+                        <i class="ri-whatsapp-line"></i>
+                        WhatsApp
+                    </a>
+                </div>
+
+                <!-- Social Dock -->
+                <div class="social-dock">
+                    <a href="https://instagram.com/cloudbitekitchen" target="_blank" class="social-icon"
+                        data-name="Instagram">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                    <a href="https://facebook.com/cloudbitekitchen" target="_blank" class="social-icon"
+                        data-name="Facebook">
+                        <i class="ri-facebook-line"></i>
+                    </a>
+                    <a href="https://linkedin.com/company/cloudbitekitchen" target="_blank" class="social-icon"
+                        data-name="LinkedIn">
+                        <i class="ri-linkedin-line"></i>
+                    </a>
+                    <a href="https://youtube.com/@cloudbitekitchen" target="_blank" class="social-icon"
+                        data-name="YouTube">
+                        <i class="ri-youtube-line"></i>
+                    </a>
+                    <a href="https://wa.me/919876543210" target="_blank" class="social-icon" data-name="WhatsApp">
+                        <i class="ri-whatsapp-line"></i>
+                    </a>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8580123456789!2d77.59456!3d12.97194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE5LjAiTiA3N8KwMzUnNDAuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>&copy; 2026 CloudBite Kitchen. All Rights Reserved. | Crafted with love, delivered with care.</p>
+    </footer>
+    <p>&copy; 2026 Snack 69. All Rights Reserved. | Hot, Fast, Fresh!</p>
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== NAVIGATION SCROLL EFFECT ====================
+        const mainNav = document.getElementById('mainNav');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navLinks.classList.remove('active'); // Close mobile menu
+                }
+            });
+        });
+
+        // ==================== PREMIUM NETFLIX-STYLE INTRO ====================
+        window.addEventListener('load', () => {
+            // Remove intro-active class after animation completes (5.5 seconds total)
+            setTimeout(() => {
+                document.body.classList.remove('intro-active');
+
+                // Smooth fade in main content with stagger effect
+                const sections = document.querySelectorAll('.nav-bar, #hero, #why-us, #faculty, #courses, #contact');
+                sections.forEach((section, index) => {
+                    setTimeout(() => {
+                        section.style.animation = 'fadeInContent 1s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }, index * 80);
+                });
+            }, 5500);
+        });
+
+        // ==================== STATS COUNTER ANIMATION ====================
+        function animateCounter(element) {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+            const isDecimal = target % 1 !== 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+
+                if (isDecimal) {
+                    element.textContent = current.toFixed(1);
+                } else if (target > 1000) {
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Observe stats section for counter animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.stat-number');
+                    counters.forEach(counter => {
+                        if (counter.textContent === '0' || counter.textContent.startsWith('0')) {
+                            animateCounter(counter);
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // ==================== FAQ ACCORDION ====================
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                } else {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // ==================== PARALLAX BACKGROUND EFFECT ====================
+        const parallaxBg = document.getElementById('parallaxBg');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.5;
+            if (parallaxBg) {
+                parallaxBg.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
+        });
+
+
+        // ==================== LIQUID GLASS BUTTON EFFECT ====================
+        class LiquidButtonEffect {
+            constructor() {
+                this.buttons = document.querySelectorAll('.liquid-btn');
+                this.turbulenceElement = document.getElementById('turbulenceElement');
+                this.displacementElement = document.getElementById('displacementElement');
+                this.init();
+            }
+
+            init() {
+                this.buttons.forEach(button => {
+                    // Hover animation using GSAP
+                    button.addEventListener('mouseenter', () => {
+                        // Apply filter to button
+                        button.style.filter = 'url(#liquidFilter)';
+
+                        // Animate the liquid distortion effect
+                        gsap.to(this.displacementElement, {
+                            attr: { scale: 15 },
+                            duration: 0.6,
+                            ease: 'power2.out'
+                        });
+
+                        gsap.to(this.turbulenceElement, {
+                            attr: { baseFrequency: '0.03 0.03' },
+                            duration: 0.6,
+                            ease: 'power2.out'
+                        });
+                    });
+
+                    button.addEventListener('mouseleave', () => {
+                        // Reset the effect
+                        gsap.to(this.displacementElement, {
+                            attr: { scale: 0 },
+                            duration: 0.4,
+                            ease: 'power2.in',
+                            onComplete: () => {
+                                button.style.filter = 'none';
+                            }
+                        });
+
+                        gsap.to(this.turbulenceElement, {
+                            attr: { baseFrequency: '0.01 0.01' },
+                            duration: 0.4,
+                            ease: 'power2.in'
+                        });
+                    });
+                });
+            }
+        }
+
+        // ==================== SMOOTH SCROLL ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for fade-in animations
+        document.querySelectorAll('.bento-card, .faculty-card, .course-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // ==================== HORIZONTAL SCROLL ANIMATION ====================
+        const facultyContainer = document.querySelector('.faculty-scroll-container');
+
+        // Enhanced horizontal scroll with trackpad support
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // Mouse drag scroll
+        facultyContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - facultyContainer.offsetLeft;
+            scrollLeft = facultyContainer.scrollLeft;
+        });
+
+        facultyContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        facultyContainer.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        facultyContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - facultyContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            facultyContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Trackpad/mousewheel horizontal scroll
+        facultyContainer.addEventListener('wheel', (e) => {
+            // Check if it's a horizontal scroll gesture
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // Natural horizontal scroll - don't prevent default
+                return;
+            }
+
+            // Convert vertical scroll to horizontal
+            e.preventDefault();
+            facultyContainer.scrollLeft += e.deltaY;
+        }, { passive: false });
+
+        // ==================== SOCIAL DOCK ENHANCED ANIMATIONS ====================
+        const socialIcons = document.querySelectorAll('.social-icon');
+
+        socialIcons.forEach((icon, index) => {
+            icon.addEventListener('mouseenter', function () {
+                // Animate the icon with GSAP for smoother effect
+                gsap.to(this, {
+                    y: -16,
+                    scale: 1.3,
+                    rotation: 10,
+                    duration: 0.4,
+                    ease: 'back.out(1.7)'
+                });
+
+                // Add ripple effect to pseudo-element
+                gsap.to(this.querySelector('i'), {
+                    scale: 1.1,
+                    rotation: -10,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            icon.addEventListener('mouseleave', function () {
+                gsap.to(this, {
+                    y: 0,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+
+                gsap.to(this.querySelector('i'), {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+            });
+        });
+
+        // ==================== INITIALIZE ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Register GSAP ScrollTrigger
+            if (typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+            }
+
+            // Initialize Liquid Button Effect (exclude social icons from liquid effect)
+            new LiquidButtonEffect();
+
+            // Add entrance animation to hero
+            gsap.from('.hero-content', {
+                opacity: 0,
+                y: 60,
+                duration: 1.2,
+                ease: 'power3.out',
+                delay: 0.3
+            });
+
+            // Animate gradient mesh
+            gsap.to('.gradient-mesh', {
+                scale: 1.05,
+                rotation: 5,
+                duration: 20,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true
+            });
+
+            // Stagger animation for course cards - set initial state
+            gsap.set('.course-card', { opacity: 1, y: 0 }); // Ensure cards are visible
+
+            gsap.from('.course-card', {
+                opacity: 0,
+                y: 40,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#courses',
+                    start: 'top 80%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to('.course-card', {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: 'power2.out'
+                        });
+                    }
+                }
+            });
+        });
+
+        // ==================== THEME TOGGLE ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const root = document.documentElement;
+
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+
+            // Add rotation animation
+            gsap.to(themeToggle, {
+                rotation: '+=360',
+                duration: 0.6,
+                ease: 'back.out(1.7)'
+            });
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'ri-sun-line'; // Show sun in dark mode
+            } else {
+                themeIcon.className = 'ri-moon-line'; // Show moon in light mode
+            }
+        }
+
+        // ==================== PERFORMANCE MONITORING ====================
+        // Log FPS in development (remove in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            let lastTime = performance.now();
+            let frames = 0;
+
+            function measureFPS() {
+                frames++;
+                const currentTime = performance.now();
+                if (currentTime >= lastTime + 1000) {
+                    const fps = Math.round((frames * 1000) / (currentTime - lastTime));
+                    console.log(`FPS: ${fps}`);
+                    frames = 0;
+                    lastTime = currentTime;
+                }
+                requestAnimationFrame(measureFPS);
+            }
+
+            requestAnimationFrame(measureFPS);
+        }
+    </script>
+</body>
+
+</html>
