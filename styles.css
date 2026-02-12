@@ -1389,11 +1389,11 @@ footer {
 /* RESPONSIVE */
 @media (max-width: 768px) {
     :root {
-        --section-padding: 80px 24px;
+        --section-padding: 60px 16px;
     }
 
     .container {
-        padding: 0 24px;
+        padding: 0 16px;
     }
 
     .nav-links {
@@ -1422,16 +1422,146 @@ footer {
         display: flex;
     }
 
+    /* Hero Section */
+    .hero-title {
+        font-size: clamp(36px, 8vw, 80px);
+        margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(14px, 3.5vw, 20px);
+        margin-bottom: 24px;
+    }
+
+    .hero-section {
+        padding: 100px 16px 60px;
+        min-height: auto;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: clamp(24px, 6vw, 42px);
+        margin-bottom: 40px;
+    }
+
+    /* Stats */
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .stat-card {
+        padding: 20px 12px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+
+    /* Bento Grid */
     .bento-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .stats-container {
+    /* Tournaments - single column on mobile */
+    .tournaments-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 16px;
     }
 
+    .tournament-card {
+        padding: 20px;
+    }
+
+    .tournament-card h3 {
+        font-size: 16px;
+    }
+
+    /* Games Scroll */
+    .games-scroll-container {
+        padding-left: 16px;
+    }
+
+    .game-card {
+        min-width: 250px;
+    }
+
+    /* Registration Form */
     .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .phone-otp-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .phone-otp-row input {
+        width: 100%;
+    }
+
+    .send-otp-btn {
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .registration-section {
+        padding: 60px 16px;
+    }
+
+    .registration-section .container {
+        padding: 24px 16px;
+    }
+
+    .otp-boxes {
+        gap: 6px;
+    }
+
+    .otp-box {
+        width: 40px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    /* Testimonials */
+    .testimonial-item {
+        min-width: 260px;
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    .testimonials-track {
+        gap: 40px;
+    }
+
+    .testimonials-title {
+        font-size: clamp(24px, 6vw, 42px);
+    }
+
+    /* FAQ */
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+        font-size: 15px;
+        padding: 16px;
+    }
+
+    .faq-answer {
+        padding: 0 16px 16px;
+        font-size: 13px;
+    }
+
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footer-info-cards {
         grid-template-columns: 1fr;
     }
 
@@ -1446,10 +1576,6 @@ footer {
         font-size: 24px;
     }
 
-    .games-scroll-container {
-        padding-left: 24px;
-    }
-
     .contact-buttons {
         flex-direction: column;
         align-items: center;
@@ -1459,5 +1585,107 @@ footer {
         width: 36px;
         height: 36px;
         margin-left: 10px;
+    }
+
+    /* Buttons */
+    .liquid-btn,
+    .register-btn {
+        font-size: 14px;
+        padding: 14px 24px;
+    }
+}
+
+/* Extra small screens (phones under 480px) */
+@media (max-width: 480px) {
+    :root {
+        --section-padding: 48px 12px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .hero-title {
+        font-size: clamp(28px, 9vw, 48px);
+    }
+
+    .hero-subtitle {
+        font-size: 13px;
+    }
+
+    .hero-section {
+        padding: 80px 12px 40px;
+    }
+
+    .section-title {
+        font-size: clamp(20px, 5.5vw, 32px);
+        margin-bottom: 24px;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 16px 8px;
+    }
+
+    .stat-number {
+        font-size: 24px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    .tournament-card {
+        padding: 16px;
+    }
+
+    .tournament-card h3 {
+        font-size: 15px;
+    }
+
+    .tournament-card p {
+        font-size: 12px;
+    }
+
+    .game-card {
+        min-width: 220px;
+    }
+
+    .otp-box {
+        width: 36px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .testimonial-item {
+        min-width: 230px;
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    .testimonial-item p {
+        font-size: 13px;
+    }
+
+    .testimonials-track {
+        gap: 24px;
+    }
+
+    .faq-question {
+        font-size: 14px;
+        padding: 14px 12px;
+    }
+
+    .faq-answer {
+        padding: 0 12px 14px;
+        font-size: 12px;
+    }
+
+    .nav-brand {
+        font-size: 18px;
     }
 }
