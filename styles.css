@@ -1478,13 +1478,23 @@ footer {
         font-size: 16px;
     }
 
-    /* Games Scroll */
-    .games-scroll-container {
-        padding-left: 16px;
+    .game-card {
+        flex: 0 0 200px;
+        min-width: 200px;
+        padding: 24px 16px;
     }
 
-    .game-card {
-        min-width: 250px;
+    .game-icon {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+        margin-bottom: 16px;
+    }
+
+    .games-scroll-container {
+        gap: 16px;
+        padding: 20px 0;
+        padding-left: 16px;
     }
 
     /* Registration Form */
@@ -1652,7 +1662,22 @@ footer {
     }
 
     .game-card {
-        min-width: 220px;
+        flex: 0 0 180px;
+        min-width: 180px;
+        padding: 20px 12px;
+    }
+
+    .game-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .games-scroll-container {
+        gap: 12px;
+        padding: 16px 0;
+        padding-left: 12px;
     }
 
     .otp-box {
